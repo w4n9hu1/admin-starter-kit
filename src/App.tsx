@@ -1,4 +1,5 @@
 import { BrowserRouter, Link, Outlet, Route, Routes } from "react-router-dom"
+import Login from "./pages/Login"
 
 function Task() {
   return (
@@ -43,6 +44,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="login" element={<Login />} />
           <Route path="/" element={<Layout />}>
             <Route index element={<User />} />
             <Route path="user" element={<User />} />

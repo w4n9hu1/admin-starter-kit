@@ -18,13 +18,19 @@ export default function Login() {
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!email || !password) {
+            setError('Email and password is required');
+            return;
+        }
+
         setLoading(true);
         try {
-            const token = await login({ email, password });
-            localStorage.setItem('token', token);
+            const loginResponse = await login({ email, password });
+            localStorage.setItem('token', loginResponse.token);
             navigate('/');
-        } catch (error) {
-            setError((error as Error).message);
+        } catch (error: any) {
+            setError(error.message);
         } finally {
             setLoading(false);
         }

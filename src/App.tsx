@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Outlet, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Link, Outlet, Route, Routes, useNavigate } from "react-router-dom"
 import Login from "./pages/Login"
 
 function Task() {
@@ -18,6 +18,13 @@ function User() {
 }
 
 function Layout() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  }
+
   return (
     <>
       <nav>
@@ -33,8 +40,8 @@ function Layout() {
           </li>
         </ul>
       </nav>
-
       <Outlet />
+      <button onClick={handleLogout}>Log out</button>
     </>
   )
 }

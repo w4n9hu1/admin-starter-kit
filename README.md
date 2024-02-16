@@ -8,3 +8,7 @@ This is a starter template using the following stack:
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Meterial-UI](https://mui.com/material-ui/)
 - [React Router](https://reactrouter.com/)
+
+### Login
+
+![Login Page](./design/login.png)

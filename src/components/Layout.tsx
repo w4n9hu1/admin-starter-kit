@@ -1,7 +1,10 @@
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider, Tooltip, dividerClasses } from "@mui/material";
 import { Navigate, Outlet } from "react-router-dom";
 import theme from "./theme";
 import SideBar from "./SideBar";
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { useState } from "react";
 
 const testData: SidebarItem[] = [
     { group: 'Accounts', title: 'User Management', path: '/task' },
@@ -11,6 +14,7 @@ const testData: SidebarItem[] = [
 ];
 
 export function Layout() {
+    const [openSidebar, setOpenSidebar] = useState(true);
 
     if (localStorage.getItem('token') == null) {
         return <Navigate to="/login" replace />;
@@ -20,7 +24,16 @@ export function Layout() {
         <>
             <ThemeProvider theme={theme}>
                 <div className="flex h-full">
-                    <SideBar companyName="Admin Starter Kit" userInfo={{ username: "Jessica Bona", email: "jessica@gmail.com" }} menuList={testData} />
+                    {openSidebar && <SideBar companyName="Admin Starter Kit"
+                        userInfo={{ username: "Jessica Bona", email: "jessica@gmail.com" }}
+                        menuList={testData} />}
+                    <div className="flex items-center">
+                        <div className="cursor-pointer text-zinc-600 hover:text-zinc-900" onClick={() => setOpenSidebar(!openSidebar)}>
+                            {openSidebar ? <Tooltip title="Close sidebar" arrow><KeyboardArrowLeftIcon /></Tooltip> :
+                                <Tooltip title="Open sidebar" arrow><KeyboardArrowRightIcon /></Tooltip>
+                            }
+                        </div>
+                    </div>
                     <main>
                         <Outlet />
                     </main>

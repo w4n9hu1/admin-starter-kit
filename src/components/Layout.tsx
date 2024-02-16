@@ -1,6 +1,14 @@
 import { Button, ThemeProvider } from "@mui/material";
-import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import theme from "./theme";
+import SideBar from "./SideBar";
+
+const testData: SidebarItem[] = [
+    { group: 'Accounts', title: 'User Management', path: '/task' },
+    { group: 'Accounts', title: 'Role Management', path: '/user' },
+    { group: 'Tasks', title: 'Task List', path: '/task' },
+    { group: 'Tasks', title: 'Task Assignments ', path: '/user' },
+];
 
 export function Layout() {
     const navigate = useNavigate();
@@ -17,22 +25,13 @@ export function Layout() {
     return (
         <>
             <ThemeProvider theme={theme}>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/user">User</Link>
-                        </li>
-                        <li>
-                            <Link to="/task">Task</Link>
-                        </li>
-                    </ul>
-                </nav>
-
-                <Outlet />
-                <Button onClick={handleLogout} variant="contained" color="secondary">Log out</Button>
+                <div className="flex h-full">
+                    <SideBar companyName="Admin Starter Kit" userInfo={{ username: "Jessica Bona", email: "jessica@gmail.com" }} menuList={testData} />
+                    <main>
+                        <Outlet />
+                        <Button onClick={handleLogout} variant="contained" color="secondary">Log out</Button>
+                    </main>
+                </div>
             </ThemeProvider>
 
         </>

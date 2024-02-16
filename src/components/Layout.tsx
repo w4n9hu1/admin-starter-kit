@@ -1,5 +1,5 @@
-import { Button, ThemeProvider } from "@mui/material";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { ThemeProvider } from "@mui/material";
+import { Navigate, Outlet } from "react-router-dom";
 import theme from "./theme";
 import SideBar from "./SideBar";
 
@@ -11,16 +11,10 @@ const testData: SidebarItem[] = [
 ];
 
 export function Layout() {
-    const navigate = useNavigate();
 
     if (localStorage.getItem('token') == null) {
         return <Navigate to="/login" replace />;
     }
-
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        navigate('/login');
-    };
 
     return (
         <>
@@ -29,11 +23,9 @@ export function Layout() {
                     <SideBar companyName="Admin Starter Kit" userInfo={{ username: "Jessica Bona", email: "jessica@gmail.com" }} menuList={testData} />
                     <main>
                         <Outlet />
-                        <Button onClick={handleLogout} variant="contained" color="secondary">Log out</Button>
                     </main>
                 </div>
             </ThemeProvider>
-
         </>
     );
 }

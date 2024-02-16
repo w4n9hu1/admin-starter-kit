@@ -1,11 +1,16 @@
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
+import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 export default function SideBar(props: SideBarProps) {
+    const navigate = useNavigate();
+
     const [openMenuList, setOpenMenuList] = useState([] as string[]);
+    const [openSettings, setOpenSettings] = useState(false);
 
     const groupedMenus: Record<string, SidebarItem[]> = {};
     props.menuList.forEach(item => {
@@ -23,6 +28,11 @@ export default function SideBar(props: SideBarProps) {
             setOpenMenuList([...openMenuList, menu]);
         }
     }
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
+    };
 
     return (
         <div className="flex flex-col bg-zinc-900 text-white w-[280px]">
@@ -52,8 +62,18 @@ export default function SideBar(props: SideBarProps) {
                     ))
                 }
             </nav>
-            <div className=" flex items-center hover:bg-zinc-600 cursor-pointer w-full p-4 rounded">
-                <div className="grow">
+            {openSettings && <div className="flex flex-col bg-zinc-800 text-sm m-4 rounded">
+                <div className="hover:bg-zinc-600 cursor-pointer p-4 rounded flex items-center">
+                    <div className="mr-2"> <SettingsIcon /></div>
+                    Settings
+                </div>
+                <div className="hover:bg-zinc-600 cursor-pointer p-4 rounded flex items-center" onClick={handleLogout} >
+                    <div className="mr-2"> <LogoutIcon /></div>
+                    Log out
+                </div>
+            </div>}
+            <div className=" flex items-center hover:bg-zinc-600 cursor-pointer w-full p-4 rounded" onClick={() => setOpenSettings(!openSettings)}>
+                <div className="grow" >
                     <p>  {props.userInfo.username}</p>
                     <p className="text-sm text-zinc-300">  {props.userInfo.email}</p>
                 </div>

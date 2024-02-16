@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import FaceIcon from '@mui/icons-material/Face';
 
 
 export default function SideBar(props: SideBarProps) {
@@ -73,6 +74,9 @@ export default function SideBar(props: SideBarProps) {
                 </div>
             </div>}
             <div className=" flex items-center hover:bg-zinc-600 cursor-pointer w-full p-4 rounded" onClick={() => setOpenSettings(!openSettings)}>
+                <div className="mr-4">
+                    <FaceIcon />
+                </div>
                 <div className="grow" >
                     <p>  {props.userInfo.username}</p>
                     <p className="text-sm text-zinc-300">  {props.userInfo.email}</p>

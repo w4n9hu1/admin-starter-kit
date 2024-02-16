@@ -1,5 +1,6 @@
-import { BrowserRouter, Link, Navigate, Outlet, Route, Routes, useNavigate } from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Login from "./pages/Login"
+import { Layout } from "./components/Layout";
 
 function Task() {
   return (
@@ -13,43 +14,6 @@ function User() {
   return (
     <>
       <h1 className="text-xl text-blue-600">User</h1>
-    </>
-  )
-}
-
-function Layout() {
-  const navigate = useNavigate();
-
-  const isAuthenticated = () => {
-    return localStorage.getItem('token') !== null;
-  };
-
-  if (!isAuthenticated()) {
-    return <Navigate to="/login" replace />
-  }
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  }
-
-  return (
-    <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/user">User</Link>
-          </li>
-          <li>
-            <Link to="/task">Task</Link>
-          </li>
-        </ul>
-      </nav>
-      <Outlet />
-      <button onClick={handleLogout}>Log out</button>
     </>
   )
 }

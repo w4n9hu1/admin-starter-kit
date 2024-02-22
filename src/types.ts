@@ -1,3 +1,22 @@
+interface LoginParams {
+    email: string;
+    password: string;
+}
+
+interface LoginResponse {
+    token: string;
+    user: {
+        username: string;
+        email: string;
+    };
+}
+
+interface UserAuthConfig {
+    userInfo: UserInfo;
+    sidebarItems: SidebarItem[];
+    companyName: string;
+}
+
 interface SidebarItem {
     group: string;
     title: string;

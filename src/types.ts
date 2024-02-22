@@ -33,3 +33,11 @@ interface UserInfo {
     username: string;
     email: string;
 }
+
+interface Task {
+    id: number;
+    title: string;
+    description: string;
+    status: "open" | "in-progress" | "done";
+    createdAt: string;
+}

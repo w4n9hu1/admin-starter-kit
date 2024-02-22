@@ -36,15 +36,20 @@ export function Layout() {
                     {openSidebar && <SideBar companyName={userAuthConfig.companyName}
                         userInfo={userAuthConfig.userInfo}
                         menuList={userAuthConfig.sidebarItems} />}
-                    <div className="flex items-center">
+                    <div className="flex items-center bg-gray-100">
                         <div className="cursor-pointer text-zinc-600 hover:text-zinc-900" onClick={() => setOpenSidebar(!openSidebar)}>
                             {openSidebar ? <Tooltip title="Close sidebar" arrow><KeyboardArrowLeftIcon /></Tooltip> :
                                 <Tooltip title="Open sidebar" arrow><KeyboardArrowRightIcon /></Tooltip>
                             }
                         </div>
                     </div>
-                    <main>
-                        <Outlet />
+                    <main className="bg-gray-100 w-full flex flex-col divide-y divide-gray-300">
+                        <div className="p-6">
+                            <h1 className="text-lg font-bold">Subtitle</h1>
+                        </div>
+                        <div className="p-6 grow flex overflow-auto">
+                            <Outlet />
+                        </div>
                     </main>
                 </div>
             </ThemeProvider>

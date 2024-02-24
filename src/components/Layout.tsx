@@ -30,10 +30,12 @@ export function Layout() {
         <>
             <ThemeProvider theme={theme}>
                 <div className="flex h-full">
-                    <SideBar companyName={userAuthConfig.companyName}
-                        userInfo={userAuthConfig.userInfo}
-                        menuList={userAuthConfig.sidebarItems} />
-                    <main className="bg-gray-100 w-full flex flex-col divide-y divide-gray-300">
+                    <div className="flex h-full fixed w-[280px] z-50">
+                        <SideBar companyName={userAuthConfig.companyName}
+                            userInfo={userAuthConfig.userInfo}
+                            menuList={userAuthConfig.sidebarItems} />
+                    </div>
+                    <main className="bg-gray-100 w-full flex flex-col divide-y divide-gray-300 ml-[280px]">
                         <div className="p-6">
                             <h1 className="text-lg font-bold">Subtitle</h1>
                         </div>

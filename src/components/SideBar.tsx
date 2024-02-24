@@ -27,7 +27,7 @@ export default function SideBar(props: SideBarProps) {
     }
 
     return (
-        <div className="flex flex-col bg-zinc-900 text-white w-[280px]">
+        <div className="flex flex-col w-full bg-zinc-900 text-white">
             <div className="text-lg font-bold py-8 text-center border-zinc-700 border-b-1 border">
                 <Link to="/">
                     <h1 >{props.companyName}</h1>

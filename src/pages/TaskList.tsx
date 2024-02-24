@@ -8,6 +8,75 @@ import 'dayjs/locale/zh-cn';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SearchIcon from '@mui/icons-material/Search';
+import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams, GridRowsProp } from '@mui/x-data-grid';
+import EditIcon from '@mui/icons-material/Edit';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+
+function generateRandomTasks(n: number): Task[] {
+    const tasks: Task[] = [];
+    for (let i = 1; i <= n; i++) {
+        const randomStatus = Math.random() < 0.33 ? 'open' : Math.random() < 0.66 ? 'in-progress' : 'done';
+        tasks.push({
+            id: i,
+            title: `Task ${i}`,
+            description: `Description of Task ${i}`,
+            status: randomStatus,
+            createdAt: new Date(Date.now() - Math.random() * 1000000000).toISOString(),
+        });
+    }
+    return tasks;
+}
+
+const rows: GridRowsProp = generateRandomTasks(10).map(task => ({
+    id: task.id,
+    title: task.title,
+    description: task.description,
+    status: task.status,
+    createdAt: task.createdAt,
+}));
+
+const columns: GridColDef[] = [
+    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'title', headerName: 'Title', width: 200 },
+    { field: 'description', headerName: 'Description', width: 400 },
+    {
+        field: 'status', headerName: 'Status', width: 200,
+        renderCell: (params) => {
+            const status = params.value as string;
+            let colorClass = '';
+            switch (status) {
+                case 'open':
+                    colorClass = 'text-green-600';
+                    break;
+                case 'in-progress':
+                    colorClass = 'text-orange-600';
+                    break;
+                case 'done':
+                    colorClass = 'text-blue-600';
+                    break;
+                default:
+                    colorClass = 'text-black';
+            }
+            return <span className={colorClass}>{status}</span>;
+        },
+    },
+    {
+        field: 'createdAt', headerName: 'Created At', width: 300,
+        valueGetter: (params) => dayjs(params.value as string).format('YYYY-MM-DD HH:mm:ss'),
+    },
+    {
+        field: 'actions',
+        type: 'actions',
+        headerName: 'Actions',
+        getActions: (params: GridRowParams) => [
+            <GridActionsCellItem
+                icon={<EditIcon />}
+                label="Delete"
+                onClick={() => { console.log(params.id) }}
+            />,
+        ]
+    }
+];
 
 export default function TaskList() {
 
@@ -123,9 +192,13 @@ export default function TaskList() {
             <div className="flex space-x-4">
                 <Button variant="contained" startIcon={<AddCircleIcon />}>Create Task</Button>
                 <Button variant="outlined" color="error" startIcon={<DeleteIcon />}>Delete Tasks</Button>
+                <Button variant="outlined" startIcon={<AssignmentIndIcon />}>Assign Tasks</Button>
+
             </div>
-            <div className="bg-blue-500 grow">
-                table
+            <div className="grow">
+                <DataGrid checkboxSelection
+                    rows={rows} columns={columns}
+                    style={{ width: '100%' }} />
             </div>
         </div>
     )

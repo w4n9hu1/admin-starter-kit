@@ -7,7 +7,6 @@ const FAKE_SIDEBARITEMS: SidebarItem[] = [
   { group: 'Accounts', title: 'User Management', path: '/task' },
   { group: 'Accounts', title: 'Role Management', path: '/user' },
   { group: 'Tasks', title: 'Task List', path: '/task' },
-  { group: 'Tasks', title: 'Task Assignments ', path: '/user' },
 ];
 
 export async function login(params: LoginParams): Promise<LoginResponse> {

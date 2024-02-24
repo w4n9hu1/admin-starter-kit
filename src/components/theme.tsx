@@ -9,6 +9,13 @@ const theme = createTheme({
             main: '#F4F4F5',
         },
     },
+    components: {
+        MuiButton: {
+            defaultProps: {
+                disableElevation: true,
+            },
+        },
+    },
 });
 
 export default theme;

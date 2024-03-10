@@ -1,41 +1,47 @@
-import { ThemeProvider, Tooltip, dividerClasses } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import { Navigate, Outlet } from "react-router-dom";
 import theme from "./theme";
 import SideBar from "./SideBar";
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { useState } from "react";
-
-const testData: SidebarItem[] = [
-    { group: 'Accounts', title: 'User Management', path: '/task' },
-    { group: 'Accounts', title: 'Role Management', path: '/user' },
-    { group: 'Tasks', title: 'Task List', path: '/task' },
-    { group: 'Tasks', title: 'Task Assignments ', path: '/user' },
-];
+import { useEffect, useState } from "react";
+import { getUserAuthConfig } from "../api/auth";
 
 export function Layout() {
-    const [openSidebar, setOpenSidebar] = useState(true);
+    const [userAuthConfig, setUserAuthConfig] = useState<UserAuthConfig>({
+        sidebarItems: [],
+        userInfo: { username: '', email: '' },
+        companyName: ''
+    });
 
-    if (localStorage.getItem('token') == null) {
-        return <Navigate to="/login" replace />;
-    }
+    const fetchUserAuthConfig = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            return <Navigate to="/login" replace />;
+        }
+        const userAuthConfig = await getUserAuthConfig(token);
+        setUserAuthConfig(userAuthConfig);
+    };
+
+    useEffect(() => {
+        fetchUserAuthConfig();
+    }, [])
+
 
     return (
         <>
             <ThemeProvider theme={theme}>
                 <div className="flex h-full">
-                    {openSidebar && <SideBar companyName="Admin Starter Kit"
-                        userInfo={{ username: "Jessica Bona", email: "jessica@gmail.com" }}
-                        menuList={testData} />}
-                    <div className="flex items-center">
-                        <div className="cursor-pointer text-zinc-600 hover:text-zinc-900" onClick={() => setOpenSidebar(!openSidebar)}>
-                            {openSidebar ? <Tooltip title="Close sidebar" arrow><KeyboardArrowLeftIcon /></Tooltip> :
-                                <Tooltip title="Open sidebar" arrow><KeyboardArrowRightIcon /></Tooltip>
-                            }
-                        </div>
+                    <div className="flex h-full fixed w-[280px] z-50">
+                        <SideBar companyName={userAuthConfig.companyName}
+                            userInfo={userAuthConfig.userInfo}
+                            menuList={userAuthConfig.sidebarItems} />
                     </div>
-                    <main>
-                        <Outlet />
+                    <main className="bg-gray-100 w-full flex flex-col divide-y divide-gray-300 ml-[280px]">
+                        <div className="p-6">
+                            <h1 className="text-lg font-bold">Subtitle</h1>
+                        </div>
+                        <div className="p-6 grow flex overflow-auto">
+                            <Outlet />
+                        </div>
                     </main>
                 </div>
             </ThemeProvider>

@@ -1,14 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Login from "./pages/Login"
 import { Layout } from "./components/Layout";
-
-function Task() {
-  return (
-    <>
-      <h1 className="text-xl text-blue-600">Task</h1>
-    </>
-  )
-}
+import TaskList from "./pages/TaskList";
 
 function User() {
   return (
@@ -27,7 +20,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<User />} />
             <Route path="user" element={<User />} />
-            <Route path="task" element={<Task />} />
+            <Route path="task" element={<TaskList />} />
           </Route>
           <Route path="*" element={<><h1>404</h1></>} />
         </Routes>

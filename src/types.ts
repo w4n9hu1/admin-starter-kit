@@ -3,12 +3,9 @@ interface LoginParams {
     password: string;
 }
 
-interface LoginResponse {
-    token: string;
-    user: {
-        username: string;
-        email: string;
-    };
+interface AccessTokenResponse{
+    accessToken: string;
+    refreshToken: string;
 }
 
 interface UserAuthConfig {

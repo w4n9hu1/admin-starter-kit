@@ -27,7 +27,7 @@ export default function Login() {
         setLoading(true);
         try {
             const loginResponse = await login({ email, password });
-            localStorage.setItem('token', loginResponse.token);
+            localStorage.setItem('token', loginResponse.accessToken);
             navigate('/');
         } catch (error: any) {
             setError(error.message);

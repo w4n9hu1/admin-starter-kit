@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import theme from "./theme";
 import SideBar from "./SideBar";
 import { useEffect, useState } from "react";
-import { getUserAuthConfig } from "../api/auth";
+import { getUserAuthConfig } from "../services/auth";
 
 export function Layout() {
     const [userAuthConfig, setUserAuthConfig] = useState<UserAuthConfig>({

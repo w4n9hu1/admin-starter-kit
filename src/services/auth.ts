@@ -11,15 +11,8 @@ const FAKE_SIDEBARITEMS: SidebarItem[] = [
 ];
 
 export async function login(params: LoginParams): Promise<AccessTokenResponse> {
-  try {
-    var response = await axios.post('https://localhost:7199/login', params);
-    return response.data;
-  } catch (error: any) {
-    if (error.response) {
-      throw new Error(error.response.data);
-    }
-    throw error;
-  }
+  const loginResponse = await axios.post('https://localhost:7199/login', params);
+  return loginResponse.data;
 }
 
 

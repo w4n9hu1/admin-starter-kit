@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { login } from "../api/auth";
+import { login } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -16,7 +16,7 @@ export default function Login() {
         }
     }, [])
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleLoginSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!email || !password) {
@@ -30,7 +30,7 @@ export default function Login() {
             localStorage.setItem('token', loginResponse.accessToken);
             navigate('/');
         } catch (error: any) {
-            setError(error.message);
+            setError(error.response.data);
         } finally {
             setLoading(false);
         }
@@ -58,7 +58,7 @@ export default function Login() {
                         <h1 className="text-xl font-semibold">Welcome to Admin Starter Kit</h1>
                         <h1 className="text-lg font-semibold text-zinc-800">Sign into with your account</h1>
                     </div>
-                    <form onSubmit={handleLogin} className="w-full space-y-3">
+                    <form onSubmit={handleLoginSubmit} className="w-full space-y-3">
                         <div>
                             <label htmlFor="email" className="text-sm text-muted-foreground">Email</label>
                             <input type="email" value={email} onChange={({ target }) => {

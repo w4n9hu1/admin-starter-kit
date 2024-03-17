@@ -7,7 +7,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import FaceIcon from '@mui/icons-material/Face';
 
 export default function SideBar(props: SideBarProps) {
-    const [openMenuList, setOpenMenuList] = useState([] as string[]);
+    const [openMenuList, setOpenMenuList] = useState<string[]>([]);
 
     const groupedMenus: Record<string, SidebarItem[]> = {};
     props.menuList.forEach(item => {

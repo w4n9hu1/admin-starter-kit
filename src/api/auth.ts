@@ -1,4 +1,5 @@
-const FAKE_TOKEN = 'token123456';
+import axios from "axios";
+
 const FAKE_USER = {
   username: 'admin',
   email: 'admin@ask.com'
@@ -9,19 +10,16 @@ const FAKE_SIDEBARITEMS: SidebarItem[] = [
   { group: 'Tasks', title: 'Task List', path: '/task' },
 ];
 
-export async function login(params: LoginParams): Promise<LoginResponse> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (params.email === 'admin@ask.com' && params.password === 'admin123') {
-        return resolve({
-          token: FAKE_TOKEN,
-          user: FAKE_USER
-        });
-      } else {
-        return reject(new Error('Invalid credentials!'));
-      }
-    }, 2000);
-  })
+export async function login(params: LoginParams): Promise<AccessTokenResponse> {
+  try {
+    var response = await axios.post('https://localhost:7199/login', params);
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data);
+    }
+    throw error;
+  }
 }
 
 

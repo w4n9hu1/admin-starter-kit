@@ -36,9 +36,9 @@ const rows: GridRowsProp = generateRandomTasks(10).map(task => ({
 }));
 
 const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'title', headerName: 'Title', width: 200 },
-    { field: 'description', headerName: 'Description', width: 400 },
+    { field: 'id', headerName: 'ID', width: 50 },
+    { field: 'title', headerName: 'Title', width: 100 },
+    { field: 'description', headerName: 'Description', width: 200 },
     {
         field: 'status', headerName: 'Status', width: 200,
         renderCell: (params) => {
@@ -61,7 +61,7 @@ const columns: GridColDef[] = [
         },
     },
     {
-        field: 'createdAt', headerName: 'Created At', width: 300,
+        field: 'createdAt', headerName: 'Created At', width: 100,
         valueGetter: (params) => dayjs(params.value as string).format('YYYY-MM-DD HH:mm:ss'),
     },
     {

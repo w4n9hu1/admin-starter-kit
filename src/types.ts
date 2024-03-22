@@ -3,31 +3,32 @@ interface LoginParams {
     password: string;
 }
 
-interface AccessTokenResponse{
+interface AccessTokenResponse {
     accessToken: string;
     refreshToken: string;
 }
 
-interface UserAuthConfig {
-    userInfo: UserInfo;
-    sidebarItems: SidebarItem[];
+interface AuthUserInfo {
+    name: string;
+    email: string;
     companyName: string;
+    menus: SidebarItem[];
 }
 
 interface SidebarItem {
     group: string;
-    title: string;
+    name: string;
     path: string;
 }
 
 interface SideBarProps {
     companyName: string;
     userInfo: UserInfo;
-    menuList: SidebarItem[];
+    menus: SidebarItem[];
 }
 
 interface UserInfo {
-    username: string;
+    name: string;
     email: string;
 }
 

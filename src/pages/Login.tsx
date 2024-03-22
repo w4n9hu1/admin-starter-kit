@@ -18,7 +18,6 @@ export default function Login() {
 
     const handleLoginSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         if (!email || !password) {
             setError('Email and password is required');
             return;
@@ -44,8 +43,7 @@ export default function Login() {
                 </div>
                 <div className="space-y-2 text-sm">
                     <p>
-                        Empower Your Enterprise with Admin Starter Kit SaaS Solutions That Unleash Creativity,
-                        Foster Collaboration, and Inspire Progress.
+                        Empower Your Enterprise with Admin Starter Kit SaaS Solutions.
                     </p>
                     <p >
                         Admin Starter Kit, Inc

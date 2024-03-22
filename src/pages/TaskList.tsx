@@ -11,29 +11,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { DataGrid, GridActionsCellItem, GridColDef, GridRowParams, GridRowsProp } from '@mui/x-data-grid';
 import EditIcon from '@mui/icons-material/Edit';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import { getTasks } from "../services/task.api";
 
-function generateRandomTasks(n: number): Task[] {
-    const tasks: Task[] = [];
-    for (let i = 1; i <= n; i++) {
-        const randomStatus = Math.random() < 0.33 ? 'open' : Math.random() < 0.66 ? 'in-progress' : 'done';
-        tasks.push({
-            id: i,
-            title: `Task ${i}`,
-            description: `Description of Task ${i}`,
-            status: randomStatus,
-            createdAt: new Date(Date.now() - Math.random() * 1000000000).toISOString(),
-        });
-    }
-    return tasks;
-}
-
-const rows: GridRowsProp = generateRandomTasks(10).map(task => ({
-    id: task.id,
-    title: task.title,
-    description: task.description,
-    status: task.status,
-    createdAt: task.createdAt,
-}));
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 50 },
@@ -79,6 +58,7 @@ const columns: GridColDef[] = [
 ];
 
 export default function TaskList() {
+    const [rows, setRows] = useState<GridRowsProp>([]);
 
     const [queryParams, setQueryParams] = useState({
         page: 1,
@@ -115,9 +95,11 @@ export default function TaskList() {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent): void => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("submit", queryParams);
+        var tasks = await getTasks();
+        setRows(tasks);
     }
 
     return (

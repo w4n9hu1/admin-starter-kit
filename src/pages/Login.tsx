@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { login } from "../api/auth";
+import { login } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -16,9 +16,8 @@ export default function Login() {
         }
     }, [])
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleLoginSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         if (!email || !password) {
             setError('Email and password is required');
             return;
@@ -30,7 +29,7 @@ export default function Login() {
             localStorage.setItem('token', loginResponse.accessToken);
             navigate('/');
         } catch (error: any) {
-            setError(error.message);
+            setError(error.response.data);
         } finally {
             setLoading(false);
         }
@@ -44,8 +43,7 @@ export default function Login() {
                 </div>
                 <div className="space-y-2 text-sm">
                     <p>
-                        Empower Your Enterprise with Admin Starter Kit SaaS Solutions That Unleash Creativity,
-                        Foster Collaboration, and Inspire Progress.
+                        Empower Your Enterprise with Admin Starter Kit SaaS Solutions.
                     </p>
                     <p >
                         Admin Starter Kit, Inc
@@ -58,7 +56,7 @@ export default function Login() {
                         <h1 className="text-xl font-semibold">Welcome to Admin Starter Kit</h1>
                         <h1 className="text-lg font-semibold text-zinc-800">Sign into with your account</h1>
                     </div>
-                    <form onSubmit={handleLogin} className="w-full space-y-3">
+                    <form onSubmit={handleLoginSubmit} className="w-full space-y-3">
                         <div>
                             <label htmlFor="email" className="text-sm text-muted-foreground">Email</label>
                             <input type="email" value={email} onChange={({ target }) => {

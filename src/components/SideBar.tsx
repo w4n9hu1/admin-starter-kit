@@ -7,10 +7,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import FaceIcon from '@mui/icons-material/Face';
 
 export default function SideBar(props: SideBarProps) {
-    const [openMenuList, setOpenMenuList] = useState([] as string[]);
+    const { menus: menuList, companyName, userInfo } = props;
+
+    const [openMenuList, setOpenMenuList] = useState<string[]>([]);
 
     const groupedMenus: Record<string, SidebarItem[]> = {};
-    props.menuList.forEach(item => {
+    menuList.forEach(item => {
         if (groupedMenus[item.group]) {
             groupedMenus[item.group].push(item);
         } else {
@@ -30,22 +32,22 @@ export default function SideBar(props: SideBarProps) {
         <div className="flex flex-col w-full bg-zinc-900 text-white">
             <div className="text-lg font-bold py-8 text-center border-zinc-700 border-b-1 border">
                 <Link to="/">
-                    <h1 >{props.companyName}</h1>
+                    <h1 >{companyName}</h1>
                 </Link>
             </div>
             <nav className="grow overflow-y-auto pt-6">
                 {
                     Object.entries(groupedMenus).map(([group, items]) => (
                         <div key={group}>
-                            <div className="flex py-2 px-4 rounded hover:bg-zinc-600 cursor-pointer" onClick={() => handleClickMenu(group)}>
-                                <p className="grow">{group}</p>
+                            <div className="flex py-3 px-6 rounded hover:bg-zinc-600 cursor-pointer" onClick={() => handleClickMenu(group)}>
+                                <p className="grow">{group.toUpperCase()}</p>
                                 {openMenuList.includes(group) ? <ExpandLess /> : <ExpandMore />}
                             </div>
                             <div className="text-sm ">
                                 {openMenuList.includes(group) && (
                                     items.map((menuItem, index) => (
                                         <div key={index} className="pl-4">
-                                            <Link className="block py-2 px-8 truncate rounded hover:bg-zinc-600" to={menuItem.path}>{menuItem.title}</Link>
+                                            <Link className="block py-3 px-8 truncate rounded hover:bg-zinc-600" to={menuItem.path}>{menuItem.name}</Link>
                                         </div>
                                     ))
                                 )}
@@ -54,12 +56,12 @@ export default function SideBar(props: SideBarProps) {
                     ))
                 }
             </nav>
-            <SidebarFooter userInfo={props.userInfo} />
+            <SidebarFooter {...userInfo} />
         </div >
     )
 }
 
-function SidebarFooter({ userInfo }: { userInfo: { username: string, email: string } }) {
+function SidebarFooter(userInfo: UserInfo) {
     const navigate = useNavigate();
 
     const [openSettings, setOpenSettings] = useState(false);
@@ -85,7 +87,7 @@ function SidebarFooter({ userInfo }: { userInfo: { username: string, email: stri
                     <FaceIcon />
                 </div>
                 <div className="grow" >
-                    <p>  {userInfo.username}</p>
+                    <p>  {userInfo.name}</p>
                     <p className="text-sm text-zinc-300">  {userInfo.email}</p>
                 </div>
                 <MenuIcon />

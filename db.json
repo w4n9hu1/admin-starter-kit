@@ -1,13 +1,65 @@
 {
-    "posts": [
-      { "id": "1", "title": "a title", "views": 100 },
-      { "id": "2", "title": "another title", "views": 200 }
-    ],
-    "comments": [
-      { "id": "1", "text": "a comment about post 1", "postId": "1" },
-      { "id": "2", "text": "another comment about post 1", "postId": "1" }
-    ],
-    "profile": {
-      "name": "typicode"
+  "login": {
+    "accessToken": "accessToken",
+    "refreshToken": "refreshToken"
+  },
+  "authUserInfo": {
+    "name": "Avram Tarasios",
+    "email": "avram.tarasios@gmail.com",
+    "companyName": "Tesla, Inc.",
+    "menus": [
+      {
+        "group": "accounts",
+        "name": "User Management",
+        "path": "/user"
+      },
+      {
+        "group": "accounts",
+        "name": "User Management2",
+        "path": "/user"
+      },
+      {
+        "group": "tasks",
+        "name": "Task List",
+        "path": "/task"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Task 1",
+      "description": "Task 1 description",
+      "status": "completed",
+      "createdAt": "2020-01-01T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Task 2",
+      "description": "Task 2 description",
+      "status": "pending",
+      "createdAt": "2020-01-02T00:00:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Task 3",
+      "description": "Task 3 description",
+      "status": "pending",
+      "createdAt": "2020-01-03T00:00:00Z"
+    },
+    {
+      "id": 4,
+      "title": "Task 4",
+      "description": "Task 4 description",
+      "status": "completed",
+      "createdAt": "2020-01-04T00:00:00Z"
+    },
+    {
+      "id": 5,
+      "title": "Task 5",
+      "description": "Task 5 description",
+      "status": "completed",
+      "createdAt": "2020-01-05T00:00:00Z"
     }
-  }
+  ]
+}

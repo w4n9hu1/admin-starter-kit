@@ -3,13 +3,14 @@ import { Navigate, Outlet } from "react-router-dom";
 import theme from "./theme";
 import SideBar from "./SideBar";
 import { useEffect, useState } from "react";
-import { getUserAuthConfig } from "../api/auth";
+import { getUserAuthConfig } from "../services/auth";
 
 export function Layout() {
-    const [userAuthConfig, setUserAuthConfig] = useState<UserAuthConfig>({
-        sidebarItems: [],
-        userInfo: { username: '', email: '' },
-        companyName: ''
+    const [authUserInfo, setAuthUserInfo] = useState<AuthUserInfo>({
+        name: '',
+        email: '',
+        companyName: '',
+        menus: [],
     });
 
     const token = localStorage.getItem('token');
@@ -18,8 +19,8 @@ export function Layout() {
     }
 
     const fetchUserAuthConfig = async () => {
-        const userAuthConfig = await getUserAuthConfig(token);
-        setUserAuthConfig(userAuthConfig);
+        const authUserInfo = await getUserAuthConfig(token);
+        setAuthUserInfo(authUserInfo);
     };
 
     useEffect(() => {
@@ -31,12 +32,12 @@ export function Layout() {
         <>
             <ThemeProvider theme={theme}>
                 <div className="flex h-full">
-                    <div className="flex h-full fixed w-[240px] z-50">
-                        <SideBar companyName={userAuthConfig.companyName}
-                            userInfo={userAuthConfig.userInfo}
-                            menuList={userAuthConfig.sidebarItems} />
+                    <div className="flex h-full w-[280px]">
+                        <SideBar menus={authUserInfo.menus}
+                            userInfo={{ name: authUserInfo.name, email: authUserInfo.email }}
+                            companyName={authUserInfo.companyName} />
                     </div>
-                    <main className="bg-gray-100 w-full flex flex-col divide-y divide-gray-300 ml-[240px]">
+                    <main className="bg-gray-100 w-full flex flex-col divide-y divide-gray-300">
                         <div className="p-6">
                             <h1 className="text-lg font-bold">Subtitle</h1>
                         </div>
